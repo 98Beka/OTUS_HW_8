@@ -6,7 +6,7 @@ using System.Threading;
 
 class Program {
     static void Main(string[] args) {
-        var x1 = GetArray(100000);
+        var x1 = GetArray(1000);
         var x2 = GetArray(1000000);
         var x3 = GetArray(10000000);
         Check(x1);
@@ -22,10 +22,10 @@ class Program {
         try {
             Sum(x);
             timer.Stop();
-            Console.WriteLine("Simple " + timer.Elapsed);
-        } catch(Exception e) {
+            Console.WriteLine("Simple " + timer.ElapsedMilliseconds);
+        } catch {
             timer.Stop();
-            Console.WriteLine(e.Message.ToString());
+            Console.WriteLine("error");
         }
         timer.Reset();
 
@@ -34,10 +34,10 @@ class Program {
         try {
             ThreadSum(x);
             timer.Stop();
-            Console.WriteLine("Thread " + timer.Elapsed);
-        }catch(Exception e) {
+            Console.WriteLine("Thread " + timer.ElapsedMilliseconds);
+        }catch {
             timer.Stop();
-            Console.WriteLine(e.Message.ToString());
+            Console.WriteLine("error");
         }
         timer.Reset();
 
@@ -45,21 +45,21 @@ class Program {
         try {
             ParallelSum(x);
             timer.Stop();
-            Console.WriteLine("Parallel " + timer.Elapsed);
-        }catch (Exception e) {
+            Console.WriteLine("Parallel " + timer.ElapsedMilliseconds);
+        }catch {
             timer.Stop();
-            Console.WriteLine(e.Message.ToString());
+            Console.WriteLine("error");
         }
         Console.WriteLine();
     }
 
-    private static long ParallelSum(int[] array) {
-        long result = array.AsParallel().Sum();
+    private static int ParallelSum(int[] array) {
+        var result = array.AsParallel().Sum();
         return result;
     }
 
-    private static long ThreadSum(int[] array) {
-        long result = 0;
+    private static int ThreadSum(int[] array) {
+        int result = 0;
 
         var splitArray = new List<int[]>();
         var z = array.Length / 10;
@@ -76,8 +76,8 @@ class Program {
         return result;
     }
 
-    private static long Sum(int[] array) {
-        long result = 0;
+    private static int Sum(int[] array) {
+        int result = 0;
         for (int i = 0; i < array.Length; i++) 
             result += array[i];
         return result;
