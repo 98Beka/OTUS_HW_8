@@ -58,7 +58,9 @@ class Program {
 
         List<Thread> threads = new List<Thread>();
         foreach (var tempArray in splitArray) {
-            var thread = new Thread(() => result += Sum(tempArray));
+            var thread = new Thread(() => result += Sum(tempArray)) {
+                IsBackground = true
+            };
             threads.Add(thread);
             thread.Start();
         }
